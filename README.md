@@ -53,7 +53,7 @@ To get the project up and running locally, follow these steps.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/philosophers-chatbot.git](https://github.com/your-username/philosophers-chatbot.git)
+    git clone [https://github.com/Glasena/philosophers-chatbot.git](https://github.com/Glasena/philosophers-chatbot.git)
     cd philosophers-chatbot
     ```
 

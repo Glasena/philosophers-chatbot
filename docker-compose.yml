@@ -1,0 +1,49 @@
+services:
+  frontend:
+    build:
+      context: ./frontend # Aponta para a pasta do frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    # A MÁGICA DO HOT RELOAD DO FRONTEND:
+    volumes:
+      - ./frontend:/app # Espelha a pasta do frontend para dentro do container
+      - /app/node_modules # O 'truque' para não apagar o node_modules de dentro do container
+    # Sobrescrevemos o comando para usar o servidor de DESENVOLVIMENTO do React
+    command: npm start
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    # A MÁGICA DO HOT RELOAD DO BACKEND:
+    volumes:
+      - ./backend:/app # Espelha a pasta do backend para dentro do container
+    # Sobrescrevemos o comando para usar o modo de desenvolvimento com reload
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+  ollama:
+    image: ollama/ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:
+    external: true

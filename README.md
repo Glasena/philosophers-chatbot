@@ -82,7 +82,7 @@ To get the project up and running locally, follow these steps.
 ## Notes
 
 -   This project's main purpose is educational and to serve as a boilerplate for more complex AI/ML projects.
--   The current persona implementation relies on system prompting. The fine-tuning phase is a planned future development.
+-   The current persona implementation relies on system prompting.
 -   The CORS configuration in the backend is set to allow all origins (`"*"`) for ease of development. For a production environment, this should be restricted to the specific frontend domain.
 
 ---
